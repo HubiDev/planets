@@ -1,10 +1,13 @@
 #include <SFML/Graphics.hpp>
 
 int main()
-{
+{    
+
     sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!", sf::Style::Default, sf::ContextSettings(24,8,4));
+    settings.antialiasingLevel = 0;
+    settings.majorVersion = 3;
+    settings.minorVersion = 0;
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "planets", sf::Style::Default, settings);
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
@@ -18,7 +21,7 @@ int main()
                 window.close();
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         window.draw(shape);
         window.display();
     }
