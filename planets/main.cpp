@@ -1,10 +1,11 @@
+#include "stdafx.h"
 #include <SFML/Graphics.hpp>
 
 int main()
 {    
 
     sf::ContextSettings settings;
-    settings.antialiasingLevel = 0;
+    settings.antialiasingLevel = 8;
     settings.majorVersion = 3;
     settings.minorVersion = 0;
     sf::RenderWindow window(sf::VideoMode(1280, 720), "planets", sf::Style::Default, settings);
