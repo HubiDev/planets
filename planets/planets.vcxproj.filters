@@ -27,6 +27,12 @@
     <ClInclude Include="ViewBase.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="GameElementBase.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +42,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="ViewBase.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="GameElementBase.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

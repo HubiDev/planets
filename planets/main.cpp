@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <SFML/Graphics.hpp>
+#include "ViewBase.hpp"
 
 int main()
 {    
@@ -10,8 +11,7 @@ int main()
     settings.minorVersion = 0;
     sf::RenderWindow window(sf::VideoMode(1280, 720), "planets", sf::Style::Default, settings);
 
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+	ViewBase viewBase;
 
     while (window.isOpen())
     {
@@ -23,7 +23,7 @@ int main()
         }
 
         window.clear(sf::Color::White);
-        window.draw(shape);
+		window.draw(viewBase);
         window.display();
     }
 

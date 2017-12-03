@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-class ViewBase : Drawable
+class ViewBase : public Drawable
 {
     public:
     ViewBase();
@@ -14,4 +14,7 @@ class ViewBase : Drawable
 
     private:
     
+	protected:
+
+
 };
