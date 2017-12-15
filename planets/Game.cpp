@@ -44,7 +44,7 @@ void Game::Start()
 			}
 		}
 
-		auto timeSinceLastLoop = _FpsTimer.getElapsedTime().asMicroseconds();
+		auto fpsFactor = CalculateFpsFactor(_FpsTimer.getElapsedTime().asMicroseconds());
 		_FpsTimer.restart();
 
 		_Window.clear(Color::White);
@@ -52,10 +52,27 @@ void Game::Start()
 		//Update each view
 		for (auto currentView : _ViewsToDisplay)
 		{
-			currentView->Update(timeSinceLastLoop);
+			currentView->Update(fpsFactor);
 			_Window.draw(*currentView);
 		}	
 
 		_Window.display();
 	}
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="timeSinceLastLoop"></param>
+/// <returns></returns>
+float Game::CalculateFpsFactor(int timeSinceLastLoop)
+{
+	float res = 1000.f / timeSinceLastLoop;
+
+	if (res == 0)
+	{
+		auto i = 0;
+	}
+
+	return res;
 }

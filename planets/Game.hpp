@@ -17,6 +17,11 @@ public:
 	void Start();
 
 private:
+
+	//Methods
+	float CalculateFpsFactor(int timeSinceLastLoop);
+
+	//Fields
 	RenderWindow _Window;
 	ContextSettings _WindowSettings;
 	Clock _FpsTimer;

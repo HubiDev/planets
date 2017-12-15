@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ViewBase.hpp"
+#include "Player.hpp"
 
-class MainView : public  ViewBase
+class MainView : public ViewBase
 {
 public:
 	MainView();
@@ -10,5 +11,11 @@ public:
 
 	// Inherited via ViewBase
 	virtual void Update(float fpsFactor) override;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+private:
+
+	Player _Player;
+
 };
 
