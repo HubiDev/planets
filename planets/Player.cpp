@@ -1,5 +1,10 @@
 #include "Player.hpp"
 #include <string>
+#include "Geometry.hpp"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <iostream>
 
 using namespace std;
 
@@ -8,7 +13,7 @@ using namespace std;
 /// </summary>
 Player::Player()
 {
-	_Shape.setSize(Vector2f(100, 175));
+	_Shape.setSize(Vector2f(50, 85));
 	_Shape.setFillColor(Color::Blue);
 	_Shape.setOrigin(Vector2f(0, 175));
 	_Shape.setPosition(200, 200);
@@ -37,16 +42,31 @@ void Player::draw(RenderTarget& target, RenderStates states) const
 /// </summary>
 /// <param name="fpsFactor"></param>
 void Player::Update(float fpsFactor)
-{
+{	
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 	{
-		_Shape.move(Vector2f(-1 / fpsFactor, 0));
+		currentRotation -= 1 / fpsFactor / 50;	
+
+		if (currentRotation <= 0)
+		{
+			currentRotation = M_PI * 2;
+		}
+
+		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 	{
-		_Shape.move(Vector2f(1 / fpsFactor, 0));
+
+		currentRotation += 1 / fpsFactor / 50;
+
+		if (currentRotation >= (M_PI * 2))
+		{
+			currentRotation = 0;
+		}
+
+		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Up))

@@ -11,6 +11,7 @@ Game::Game()
 	_WindowSettings.antialiasingLevel = 8;
 	_WindowSettings.majorVersion = 3;
 	_WindowSettings.minorVersion = 0;
+	_Window.setFramerateLimit(60);
 
 	_ViewsToDisplay.push_back(new MainView());
 }
@@ -49,7 +50,7 @@ void Game::Start()
 
 		_Window.clear(Color::White);
 
-		//Update each view
+		//Update and draw each view
 		for (auto currentView : _ViewsToDisplay)
 		{
 			currentView->Update(fpsFactor);
@@ -65,14 +66,8 @@ void Game::Start()
 /// </summary>
 /// <param name="timeSinceLastLoop"></param>
 /// <returns></returns>
-float Game::CalculateFpsFactor(int timeSinceLastLoop)
+float Game::CalculateFpsFactor(long long timeSinceLastLoop)
 {
-	float res = 1000.f / timeSinceLastLoop;
-
-	if (res == 0)
-	{
-		auto i = 0;
-	}
-
+	float res = 10000.f / (float)timeSinceLastLoop;
 	return res;
 }

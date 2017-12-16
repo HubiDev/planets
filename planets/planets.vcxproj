@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameElementBase.hpp" />
+    <ClInclude Include="Geometry.hpp" />
     <ClInclude Include="MainView.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="stdafx.h" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameElementBase.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainView.cpp" />
     <ClCompile Include="Player.cpp" />

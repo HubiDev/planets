@@ -15,5 +15,6 @@ private:
 
 	//-----------------------------------------------------------------------------
 	RectangleShape _Shape;
+	float currentRotation = 0.f;
 };
 

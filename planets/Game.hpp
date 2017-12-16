@@ -19,7 +19,7 @@ public:
 private:
 
 	//Methods
-	float CalculateFpsFactor(int timeSinceLastLoop);
+	float CalculateFpsFactor(long long timeSinceLastLoop);
 
 	//Fields
 	RenderWindow _Window;
