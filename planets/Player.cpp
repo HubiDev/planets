@@ -15,9 +15,8 @@ Player::Player()
 {
 	_Shape.setSize(Vector2f(50, 85));
 	_Shape.setFillColor(Color::Blue);
-	_Shape.setOrigin(Vector2f(0, 175));
-	_Shape.setPosition(200, 200);
-
+	_Shape.setOrigin(Vector2f(25, 42.5));
+	_Shape.setPosition(640, 360);
 }
 
 /// <summary>
@@ -54,6 +53,7 @@ void Player::Update(float fpsFactor)
 		}
 
 		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
+		_Shape.setRotation(Geometry::GetDegreesFromRadian(currentRotation) + 90.f);
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
@@ -67,6 +67,7 @@ void Player::Update(float fpsFactor)
 		}
 
 		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
+		_Shape.setRotation(Geometry::GetDegreesFromRadian(currentRotation) + 90.f);
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Up))

@@ -25,6 +25,8 @@ private:
 	RenderWindow _Window;
 	ContextSettings _WindowSettings;
 	Clock _FpsTimer;
+	int _Fps = 0;
+	Clock _FpsCounter;
 	list<ViewBase*> _ViewsToDisplay;
 
 };

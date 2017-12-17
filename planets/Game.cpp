@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "Game.hpp"
 #include "MainView.hpp"
+#include "Geometry.hpp"
+#include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 /// <summary>
 /// Constructor
@@ -10,8 +14,7 @@ Game::Game()
 	//Init settings
 	_WindowSettings.antialiasingLevel = 8;
 	_WindowSettings.majorVersion = 3;
-	_WindowSettings.minorVersion = 0;
-	_Window.setFramerateLimit(60);
+	_WindowSettings.minorVersion = 0;	
 
 	_ViewsToDisplay.push_back(new MainView());
 }
@@ -30,11 +33,15 @@ Game::~Game()
 
 void Game::Start()
 {
-	_Window.create(VideoMode(1280, 720), "Planets", Style::Close, _WindowSettings);
-	_FpsTimer.restart(); //TODO
+	auto test = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(1, 0));
+	auto test1 = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(0, -1));
+	auto test2 = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(-1, 0));
+
+	_Window.create(VideoMode(1280, 720), "Planets", Style::Close, _WindowSettings);	
+	_FpsCounter.restart();
 
 	while (_Window.isOpen())
-	{
+	{		
 		//Handle events
 		Event event;
 		while (_Window.pollEvent(event))
@@ -57,7 +64,18 @@ void Game::Start()
 			_Window.draw(*currentView);
 		}	
 
-		_Window.display();
+		_Window.display();		
+
+		if (_FpsCounter.getElapsedTime().asSeconds() >= 1.f)
+		{
+			//cout << _Fps << endl;
+			_Fps = 0;
+			_FpsCounter.restart();
+		}
+		else
+		{ 
+			++_Fps;
+		}
 	}
 }
 
