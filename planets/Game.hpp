@@ -15,11 +15,13 @@ public:
 	~Game();
 
 	void Start();
+	static float CalculateFpsFactor(long long timeSinceLastLoop);
+	long long CalculateElapsedTimeFromFpsFactor(float fpsFactor);
 
 private:
 
 	//Methods
-	float CalculateFpsFactor(long long timeSinceLastLoop);
+	
 
 	//Fields
 	RenderWindow _Window;

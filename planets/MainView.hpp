@@ -2,6 +2,7 @@
 
 #include "ViewBase.hpp"
 #include "Player.hpp"
+#include "Planet.hpp"
 
 class MainView : public ViewBase
 {
@@ -16,6 +17,7 @@ public:
 private:
 
 	Player _Player;
+	Planet _Planet;
 
 };
 

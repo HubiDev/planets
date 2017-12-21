@@ -13,8 +13,13 @@ public:
 
 private:
 
+	void HandleJump(float fpsFactor);
+
 	//-----------------------------------------------------------------------------
 	RectangleShape _Shape;
-	float currentRotation = 0.f;
+	float _CurrentRotation = 0.f;
+	bool _IsJumping = false;
+	const Vector2f* _JumpStartPos = nullptr;
+	float _TimeSinceJumpStart = 0.f;
 };
 

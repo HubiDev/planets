@@ -14,7 +14,7 @@ using namespace std;
 Player::Player()
 {
 	_Shape.setSize(Vector2f(50, 85));
-	_Shape.setFillColor(Color::Blue);
+	_Shape.setFillColor(Color::Black);
 	_Shape.setOrigin(Vector2f(25, 42.5));
 	_Shape.setPosition(640, 360);
 }
@@ -45,39 +45,54 @@ void Player::Update(float fpsFactor)
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 	{
-		currentRotation -= 1 / fpsFactor / 50;	
+		_CurrentRotation -= 1 / fpsFactor / 50;	
 
-		if (currentRotation <= 0)
+		if (_CurrentRotation <= 0)
 		{
-			currentRotation = M_PI * 2;
+			_CurrentRotation = M_PI * 2;
 		}
 
-		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
-		_Shape.setRotation(Geometry::GetDegreesFromRadian(currentRotation) + 90.f);
+		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
+		_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 	{
 
-		currentRotation += 1 / fpsFactor / 50;
+		_CurrentRotation += 1 / fpsFactor / 50;
 
-		if (currentRotation >= (M_PI * 2))
+		if (_CurrentRotation >= (M_PI * 2))
 		{
-			currentRotation = 0;
+			_CurrentRotation = 0;
 		}
 
-		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, currentRotation));
-		_Shape.setRotation(Geometry::GetDegreesFromRadian(currentRotation) + 90.f);
+		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
+		_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::Key::Up))
+	if (Keyboard::isKeyPressed(Keyboard::Key::Space))
 	{
-		_Shape.move(Vector2f(0, -1 / fpsFactor));
+		_IsJumping = true;
+
+		if (_JumpStartPos == nullptr)
+		{
+			_JumpStartPos = &(_Shape.getPosition());
+		}
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::Key::Down))
+	if (_IsJumping)
 	{
-		_Shape.move(Vector2f(0, 1 / fpsFactor));
+		HandleJump(fpsFactor);
 	}
 
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="fpsFactor"></param>
+void Player::HandleJump(float fpsFactor)
+{
+	_TimeSinceJumpStart += fpsFactor;
+	cout << _TimeSinceJumpStart << endl;
 }

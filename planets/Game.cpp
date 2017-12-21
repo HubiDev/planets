@@ -89,3 +89,14 @@ float Game::CalculateFpsFactor(long long timeSinceLastLoop)
 	float res = 10000.f / (float)timeSinceLastLoop;
 	return res;
 }
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="fpsFactor"></param>
+/// <returns></returns>
+long long Game::CalculateElapsedTimeFromFpsFactor(float fpsFactor)
+{
+	long long res = 10000 * fpsFactor;
+	return res;
+}

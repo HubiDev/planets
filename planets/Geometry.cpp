@@ -59,9 +59,27 @@ float Geometry::GetAngleBetweenPoints(const Vector2f & point1, const Vector2f & 
 	return res;
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="radian"></param>
+/// <returns></returns>
 float Geometry::GetDegreesFromRadian(float radian)
 {
 	return radian * 180.f / M_PI;
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="angle"></param>
+/// <param name="offsetFromOrigin"></param>
+/// <returns></returns>
+Vector2f Geometry::CalculatePointFromAngle(float angle, float offsetFromOrigin)
+{
+	float x = offsetFromOrigin * cosf(GetDegreesFromRadian(angle));
+	float y = offsetFromOrigin * sinf(GetDegreesFromRadian(angle));
+	return Vector2f(x,y);
 }
 
 
