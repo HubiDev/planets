@@ -19,7 +19,7 @@ private:
 	RectangleShape _Shape;
 	float _CurrentRotation = 0.f;
 	bool _IsJumping = false;
-	const Vector2f* _JumpStartPos = nullptr;
 	float _TimeSinceJumpStart = 0.f;
+	float _TmpHeight = 0.f;
 };
 

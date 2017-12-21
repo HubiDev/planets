@@ -16,7 +16,7 @@ public:
 
 	void Start();
 	static float CalculateFpsFactor(long long timeSinceLastLoop);
-	long long CalculateElapsedTimeFromFpsFactor(float fpsFactor);
+	static long long CalculateElapsedTimeFromFpsFactor(float fpsFactor);
 
 private:
 

@@ -1,6 +1,8 @@
 #include "Player.hpp"
 #include <string>
 #include "Geometry.hpp"
+#include "Game.hpp"
+#include "Physics.hpp"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -33,7 +35,7 @@ Player::~Player()
 /// <param name="states"></param>
 void Player::draw(RenderTarget& target, RenderStates states) const
 {
-	target.draw(_Shape);	
+	target.draw(_Shape);
 }
 
 /// <summary>
@@ -41,43 +43,40 @@ void Player::draw(RenderTarget& target, RenderStates states) const
 /// </summary>
 /// <param name="fpsFactor"></param>
 void Player::Update(float fpsFactor)
-{	
-
-	if (Keyboard::isKeyPressed(Keyboard::Key::Left))
+{
+	if (!_IsJumping)
 	{
-		_CurrentRotation -= 1 / fpsFactor / 50;	
-
-		if (_CurrentRotation <= 0)
+		if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 		{
-			_CurrentRotation = M_PI * 2;
+			_CurrentRotation -= 1 / fpsFactor / 50;
+
+			if (_CurrentRotation <= 0)
+			{
+				_CurrentRotation = M_PI * 2;
+			}
+
+			_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
+			_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
-		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
-		_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
-	}
-
-	if (Keyboard::isKeyPressed(Keyboard::Key::Right))
-	{
-
-		_CurrentRotation += 1 / fpsFactor / 50;
-
-		if (_CurrentRotation >= (M_PI * 2))
+		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 		{
-			_CurrentRotation = 0;
-		}
 
-		_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
-		_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_CurrentRotation += 1 / fpsFactor / 50;
+
+			if (_CurrentRotation >= (M_PI * 2))
+			{
+				_CurrentRotation = 0;
+			}
+
+			_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
+			_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+		}
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::Key::Space))
 	{
 		_IsJumping = true;
-
-		if (_JumpStartPos == nullptr)
-		{
-			_JumpStartPos = &(_Shape.getPosition());
-		}
 	}
 
 	if (_IsJumping)
@@ -93,6 +92,24 @@ void Player::Update(float fpsFactor)
 /// <param name="fpsFactor"></param>
 void Player::HandleJump(float fpsFactor)
 {
-	_TimeSinceJumpStart += fpsFactor;
-	cout << _TimeSinceJumpStart << endl;
+	auto t = Game::CalculateElapsedTimeFromFpsFactor(fpsFactor);
+	float x = t / 10000000000.f;
+
+	_TimeSinceJumpStart += x;
+
+	auto height = Physics::VerticalThrow(1.1, _TimeSinceJumpStart, 9.81);
+
+	_TmpHeight += height;
+
+	if (_TmpHeight > 0)
+	{
+		auto pos = Geometry::CalculatePointFromAngle(_CurrentRotation, height);
+		_Shape.move(pos);
+	}
+	else
+	{
+		_IsJumping = false;
+		_TimeSinceJumpStart = 0.f;
+		_TmpHeight = 0.f;
+	}
 }

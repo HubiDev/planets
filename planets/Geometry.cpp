@@ -77,8 +77,8 @@ float Geometry::GetDegreesFromRadian(float radian)
 /// <returns></returns>
 Vector2f Geometry::CalculatePointFromAngle(float angle, float offsetFromOrigin)
 {
-	float x = offsetFromOrigin * cosf(GetDegreesFromRadian(angle));
-	float y = offsetFromOrigin * sinf(GetDegreesFromRadian(angle));
+	float x = offsetFromOrigin * cosf(angle);
+	float y = offsetFromOrigin * sinf(angle);
 	return Vector2f(x,y);
 }
 
