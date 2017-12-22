@@ -31,12 +31,11 @@ Game::~Game()
 	}
 }
 
+/// <summary>
+/// 
+/// </summary>
 void Game::Start()
 {
-	auto test = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(1, 0));
-	auto test1 = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(0, -1));
-	auto test2 = Geometry::GetAngleBetweenPoints(Vector2f(0, 1), Vector2f(-1, 0));
-
 	_Window.create(VideoMode(1280, 720), "Planets", Style::Close, _WindowSettings);	
 	_FpsCounter.restart();
 

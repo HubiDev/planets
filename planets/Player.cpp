@@ -15,10 +15,15 @@ using namespace std;
 /// </summary>
 Player::Player()
 {
-	_Shape.setSize(Vector2f(50, 85));
-	_Shape.setFillColor(Color::Black);
-	_Shape.setOrigin(Vector2f(25, 42.5));
-	_Shape.setPosition(640, 360);
+	//_Shape.setSize(Vector2f(50, 85));
+	//_Shape.setFillColor(Color::Black);
+	//_Shape.setOrigin(Vector2f(25, 42.5));
+	//_Shape.setPosition(640, 360);
+
+	_Texture.loadFromFile("Textures\\astronaut_02.png");
+	_Texture.setSmooth(true);
+	_Sprite.setTexture(_Texture);
+	_Sprite.setOrigin(_Texture.getSize().x / 2, _Texture.getSize().y / 2);
 }
 
 /// <summary>
@@ -35,7 +40,8 @@ Player::~Player()
 /// <param name="states"></param>
 void Player::draw(RenderTarget& target, RenderStates states) const
 {
-	target.draw(_Shape);
+	//target.draw(_Shape);
+	target.draw(_Sprite);
 }
 
 /// <summary>
@@ -55,8 +61,8 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = M_PI * 2;
 			}
 
-			_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
-			_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 120.f, _CurrentRotation));
+			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
@@ -69,8 +75,8 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = 0;
 			}
 
-			_Shape.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 100.f, _CurrentRotation));
-			_Shape.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 120.f, _CurrentRotation));
+			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 	}
 
@@ -104,7 +110,7 @@ void Player::HandleJump(float fpsFactor)
 	if (_TmpHeight > 0)
 	{
 		auto pos = Geometry::CalculatePointFromAngle(_CurrentRotation, height);
-		_Shape.move(pos);
+		_Sprite.move(pos);
 	}
 	else
 	{

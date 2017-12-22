@@ -16,7 +16,9 @@ private:
 	void HandleJump(float fpsFactor);
 
 	//-----------------------------------------------------------------------------
-	RectangleShape _Shape;
+	//RectangleShape _Shape;
+	Texture _Texture;
+	Sprite _Sprite;
 	float _CurrentRotation = 0.f;
 	bool _IsJumping = false;
 	float _TimeSinceJumpStart = 0.f;
