@@ -5,6 +5,8 @@
 #include <iostream>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <chrono>
+#include <thread>
 
 /// <summary>
 /// Constructor
@@ -40,7 +42,7 @@ void Game::Start()
 	_FpsCounter.restart();
 
 	while (_Window.isOpen())
-	{		
+	{
 		//Handle events
 		Event event;
 		while (_Window.pollEvent(event))
@@ -54,7 +56,7 @@ void Game::Start()
 		auto fpsFactor = CalculateFpsFactor(_FpsTimer.getElapsedTime().asMicroseconds());
 		_FpsTimer.restart();
 
-		_Window.clear(Color::White);
+		_Window.clear(Color::Black);
 
 		//Update and draw each view
 		for (auto currentView : _ViewsToDisplay)
@@ -67,7 +69,7 @@ void Game::Start()
 
 		if (_FpsCounter.getElapsedTime().asSeconds() >= 1.f)
 		{
-			//cout << _Fps << endl;
+			cout << _Fps << endl;
 			_Fps = 0;
 			_FpsCounter.restart();
 		}

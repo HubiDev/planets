@@ -151,6 +151,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameElementBase.hpp" />
     <ClInclude Include="Geometry.hpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="ViewBase.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameElementBase.cpp" />
     <ClCompile Include="Geometry.cpp" />

@@ -7,9 +7,9 @@
 /// </summary>
 Planet::Planet()
 {
-	_Shape.setRadius(50.f);
+	_Shape.setRadius(100.f);
 	_Shape.setFillColor(Color::Blue);
-	_Shape.setOrigin(Vector2f(50.f, 50.f));
+	_Shape.setOrigin(Vector2f(100.f, 100.f));
 	_Shape.setPosition(640, 360);
 }
 

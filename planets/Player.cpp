@@ -61,7 +61,7 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = M_PI * 2;
 			}
 
-			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 120.f, _CurrentRotation));
+			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
 			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
@@ -75,7 +75,7 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = 0;
 			}
 
-			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 120.f, _CurrentRotation));
+			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
 			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 	}
