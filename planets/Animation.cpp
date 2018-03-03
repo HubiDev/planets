@@ -2,11 +2,12 @@
 #include "Animation.hpp"
 
 
-Animation::Animation(int stepCount, float frameDuration) 
+Animation::Animation(int stepCount, float frameDuration, shared_ptr<Sprite> sprite)
 	: _StepCount(stepCount),
 	_FrameDuration(frameDuration)
-
 {
+	_PtrSprite = sprite;
+
 }
 
 /// <summary>

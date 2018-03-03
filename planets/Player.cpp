@@ -15,12 +15,12 @@ using namespace std;
 /// </summary>
 Player::Player()
 {
-	//_PtrSprite = make_shared<Sprite>(new Sprite());
+	_PtrSprite = make_shared<Sprite>();
 
 	_Texture.loadFromFile("Textures\\astronaut_02.png");
 	_Texture.setSmooth(true);
-	_PtrSprite.setTexture(_Texture);	
-	_PtrSprite.setOrigin(_Texture.getSize().x / 2.f, _Texture.getSize().y / 2.f); //Set origin to center of the sprite
+	_PtrSprite->setTexture(_Texture);	
+	_PtrSprite->setOrigin(_Texture.getSize().x / 2.f, _Texture.getSize().y / 2.f); //Set origin to center of the sprite	
 }
 
 /// <summary>
@@ -37,7 +37,7 @@ Player::~Player()
 /// <param name="states"></param>
 void Player::draw(RenderTarget& target, RenderStates states) const
 {	
-	target.draw(_PtrSprite);
+	target.draw(*_PtrSprite);
 }
 
 /// <summary>
@@ -57,8 +57,8 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = static_cast<float>(M_PI * 2.f);
 			}
 
-			_PtrSprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_PtrSprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_PtrSprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_PtrSprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
@@ -71,8 +71,8 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = 0;
 			}
 
-			_PtrSprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_PtrSprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_PtrSprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_PtrSprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 	}
 
@@ -106,7 +106,7 @@ void Player::HandleJump(float fpsFactor)
 	if (_TmpHeight > 0)
 	{
 		auto pos = Geometry::CalculatePointFromAngle(_CurrentRotation, height);
-		_PtrSprite.move(pos);
+		_PtrSprite->move(pos);
 	}
 	else
 	{

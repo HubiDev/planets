@@ -18,7 +18,7 @@ Game::Game()
 	_WindowSettings.majorVersion = 3;
 	_WindowSettings.minorVersion = 0;	
 
-	_ViewsToDisplay.push_back(new MainView());
+	_ViewsToDisplay.push_back(unique_ptr<ViewBase>(new MainView()));
 }
 
 
@@ -27,10 +27,6 @@ Game::Game()
 /// </summary>
 Game::~Game()
 {
-	for (auto currentView : _ViewsToDisplay)
-	{
-		delete currentView;
-	}
 }
 
 /// <summary>
@@ -59,7 +55,7 @@ void Game::Start()
 		_Window.clear(Color::Black);
 
 		//Update and draw each view
-		for (auto currentView : _ViewsToDisplay)
+		for (const auto& currentView : _ViewsToDisplay)
 		{
 			currentView->Update(fpsFactor);
 			_Window.draw(*currentView);

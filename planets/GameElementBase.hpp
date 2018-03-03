@@ -12,7 +12,7 @@ public:
 
 	// Inherited via Drawable
 	virtual void draw(RenderTarget& target, RenderStates states) const = 0;
-	virtual void Update(float fpsFactor) = 0;
+	virtual void Update(float fpsFactor) = 0;	
 
 protected:
 };

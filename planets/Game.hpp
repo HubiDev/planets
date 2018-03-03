@@ -1,8 +1,8 @@
 #pragma once
 
 #include "SFML\Graphics.hpp"
-#include <list>
-
+#include <vector>
+#include <memory>
 #include "ViewBase.hpp"
 
 using namespace sf;
@@ -29,7 +29,7 @@ private:
 	Clock _FpsTimer;
 	int _Fps = 0;
 	Clock _FpsCounter;
-	list<ViewBase*> _ViewsToDisplay;
+	vector<unique_ptr<ViewBase>> _ViewsToDisplay;
 
 };
 

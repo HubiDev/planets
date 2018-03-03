@@ -20,12 +20,11 @@ private:
 
 	//-----------------------------------------------------------------------------
 	//RectangleShape _Shape;
-	Texture _Texture;
-	//Sprite _Sprite;
-	Sprite _PtrSprite;
+	Texture _Texture;	
+	shared_ptr<Sprite> _PtrSprite = nullptr;
 	float _CurrentRotation = 0.f;
 	bool _IsJumping = false;
 	float _TimeSinceJumpStart = 0.f;
-	float _TmpHeight = 0.f;
+	float _TmpHeight = 0.f;	;
 };
 

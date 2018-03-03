@@ -1,4 +1,10 @@
 #pragma once
+#include <memory>
+#include <SFML\Graphics.hpp>
+
+using namespace std;
+using namespace sf;
+
 class Animation
 {
 public:
@@ -6,7 +12,7 @@ public:
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	Animation(int stepCount, float frameDuration);
+	Animation(int stepCount, float frameDuration, shared_ptr<Sprite>);
 
 	/// <summary>
 	/// Destructor
@@ -21,10 +27,12 @@ public:
 
 private:
 
-	int _StepCount;
-	int _MovementX;
-	int _MovementY;
-	float _FrameDuration;	
+	int _StepCount = 0;
+	int _MovementX = 0;
+	int _MovementY = 0;
+	float _FrameDuration = 0.f;
+	shared_ptr<Sprite> _PtrSprite = nullptr;
+
 };
 
 
