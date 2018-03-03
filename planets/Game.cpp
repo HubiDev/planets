@@ -98,6 +98,6 @@ float Game::CalculateFpsFactor(long long timeSinceLastLoop)
 /// <returns></returns>
 long long Game::CalculateElapsedTimeFromFpsFactor(float fpsFactor)
 {
-	long long res = 10000 * fpsFactor;
+	long long res = static_cast<long long>(10000 * fpsFactor);
 	return res;
 }

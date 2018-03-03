@@ -15,15 +15,12 @@ using namespace std;
 /// </summary>
 Player::Player()
 {
-	//_Shape.setSize(Vector2f(50, 85));
-	//_Shape.setFillColor(Color::Black);
-	//_Shape.setOrigin(Vector2f(25, 42.5));
-	//_Shape.setPosition(640, 360);
+	//_PtrSprite = make_shared<Sprite>(new Sprite());
 
 	_Texture.loadFromFile("Textures\\astronaut_02.png");
 	_Texture.setSmooth(true);
-	_Sprite.setTexture(_Texture);
-	_Sprite.setOrigin(_Texture.getSize().x / 2, _Texture.getSize().y / 2);
+	_PtrSprite.setTexture(_Texture);	
+	_PtrSprite.setOrigin(_Texture.getSize().x / 2.f, _Texture.getSize().y / 2.f); //Set origin to center of the sprite
 }
 
 /// <summary>
@@ -39,9 +36,8 @@ Player::~Player()
 /// <param name="target"></param>
 /// <param name="states"></param>
 void Player::draw(RenderTarget& target, RenderStates states) const
-{
-	//target.draw(_Shape);
-	target.draw(_Sprite);
+{	
+	target.draw(_PtrSprite);
 }
 
 /// <summary>
@@ -58,11 +54,11 @@ void Player::Update(float fpsFactor)
 
 			if (_CurrentRotation <= 0)
 			{
-				_CurrentRotation = M_PI * 2;
+				_CurrentRotation = static_cast<float>(M_PI * 2.f);
 			}
 
-			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_PtrSprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_PtrSprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
@@ -75,8 +71,8 @@ void Player::Update(float fpsFactor)
 				_CurrentRotation = 0;
 			}
 
-			_Sprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_Sprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_PtrSprite.setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_PtrSprite.setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 	}
 
@@ -103,14 +99,14 @@ void Player::HandleJump(float fpsFactor)
 
 	_TimeSinceJumpStart += x;
 
-	auto height = Physics::VerticalThrow(1.1, _TimeSinceJumpStart, 9.81);
+	auto height = Physics::VerticalThrow(1.1f, _TimeSinceJumpStart, 9.81f);
 
 	_TmpHeight += height;
 
 	if (_TmpHeight > 0)
 	{
 		auto pos = Geometry::CalculatePointFromAngle(_CurrentRotation, height);
-		_Sprite.move(pos);
+		_PtrSprite.move(pos);
 	}
 	else
 	{

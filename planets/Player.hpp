@@ -1,5 +1,8 @@
 #pragma once
 #include "GameElementBase.hpp"
+#include <memory>
+
+using namespace std;
 
 class Player : public GameElementBase
 {
@@ -18,7 +21,8 @@ private:
 	//-----------------------------------------------------------------------------
 	//RectangleShape _Shape;
 	Texture _Texture;
-	Sprite _Sprite;
+	//Sprite _Sprite;
+	Sprite _PtrSprite;
 	float _CurrentRotation = 0.f;
 	bool _IsJumping = false;
 	float _TimeSinceJumpStart = 0.f;
