@@ -1,6 +1,8 @@
 #pragma once
-#include "GameElementBase.hpp"
 #include <memory>
+
+#include "GameElementBase.hpp"
+#include "Animation.hpp"
 
 using namespace std;
 
@@ -31,6 +33,7 @@ private:
 	double _TimeSinceJumpStart = 0;
 	double _TmpHeight = 0.f;
 	Vector2f _PosBeforeJump;
+	unique_ptr<Animation> _WalkingAnimation = nullptr;
 
 #pragma endregion
 

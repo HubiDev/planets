@@ -44,7 +44,7 @@ void Game::Start()
 
 	while (_Window.isOpen())
 	{
-		//this_thread::sleep_for(2ms);//Frame limiter
+		this_thread::sleep_for(2ms);//Frame limiter
 
 		//Handle events
 		Event event;

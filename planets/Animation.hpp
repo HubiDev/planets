@@ -19,19 +19,41 @@ public:
 	/// </summary>
 	~Animation();
 
-
+	/// <summary>
+	/// Updates the animation.
+	/// </summary>
+	/// <param name="fpsFactor">The microseconds left since the last iteration.</param>
 	void Update(long long fpsFactor);
-	void SetAnimationStepCount(int stepCount);
-	void SetAnimationMovement(int movementX, int movementY);
-	void SetFrameDuration(float duration);
+
+	/// <summary>
+	/// Starts the animation.
+	/// </summary>
+	void Start();
+
+	/// <summary>
+	/// Stops the animation.
+	/// </summary>
+	/// <param name="reset">Flag indicating wether the animation should be reseted.</param>
+	void Stop(bool reset = true);
+
+	/// <summary>
+	/// Flag indicating wether the animation is running.
+	/// </summary>
+	/// <returns></returns>
+	bool IsRunning();
 
 private:
 
+	bool _IsRunning = false;
 	int _StepCount = 0;
 	int _MovementX = 0;
 	int _MovementY = 0;
+	int _AlreadyShownFrames = 0;
 	float _FrameDuration = 0.f;
-	shared_ptr<Sprite> _PtrSprite = nullptr;
+	float _FrameWidth = 0.f;
+	float _FrameHeigth = 0.f;
+	float _durationSinceLastIteration = 0.f;
+	shared_ptr<Sprite> _Sprite = nullptr;
 
 };
 

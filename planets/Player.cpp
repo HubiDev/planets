@@ -20,9 +20,11 @@ Player::Player()
 	_Texture.loadFromFile("Textures\\astronaut_formatted.png");	
 	_Texture.setSmooth(true);	
 	_Sprite->setTexture(_Texture);
-	_Sprite->setTextureRect(IntRect(0, 0, 800, _Texture.getSize().y));
-	_Sprite->setOrigin(_Sprite->getTextureRect().width / 2.f, _Sprite->getTextureRect().height / 2.f); //Set origin to center of the sprite		
-	_Sprite->setScale(0.1f, 0.1f);
+	_Sprite->setTextureRect(IntRect(0, 0, 170.f, _Texture.getSize().y));
+	_Sprite->setOrigin(_Sprite->getTextureRect().width / 2.f, _Sprite->getTextureRect().height / 2.f); //Set origin to center of the sprite
+	_Sprite->setScale(0.5f, 0.5f);
+
+	_WalkingAnimation = make_unique<Animation>(6, 200.f, _Sprite);
 }
 
 /// <summary>
@@ -50,6 +52,8 @@ void Player::Update(long long fpsFactor)
 {
 	double ms = fpsFactor / 1000.0; //Convert microseconds into milliseconds
 
+	_WalkingAnimation.get()->Update(fpsFactor);
+
 	if (!_IsJumping)
 	{
 		double degreesMoved = ROT_SPEED * ms; //Calculate how many degrees the player should have moved in the mean time
@@ -64,12 +68,13 @@ void Player::Update(long long fpsFactor)
 				_CurrentRotation = M_PI * 2.f - rest;
 			}
 
-			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_Sprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, static_cast<float>(_CurrentRotation)));
+			_Sprite->setRotation(Geometry::GetDegreesFromRadian(static_cast<float>(_CurrentRotation)) + 90.f);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 		{
+			_WalkingAnimation.get()->Start();
 
 			_CurrentRotation += degreesMoved;
 
@@ -79,8 +84,15 @@ void Player::Update(long long fpsFactor)
 				_CurrentRotation = rest;
 			}
 
-			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_Sprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, static_cast<float>(_CurrentRotation)));
+			_Sprite->setRotation(Geometry::GetDegreesFromRadian(static_cast<float>(_CurrentRotation)) + 90.f);
+		}
+		else
+		{
+			if (_WalkingAnimation.get()->IsRunning())
+			{
+				_WalkingAnimation.get()->Stop();
+			}
 		}
 	}
 
@@ -104,7 +116,7 @@ void Player::Update(long long fpsFactor)
 void Player::HandleJump(long long fpsFactor)
 {
 	_TimeSinceJumpStart += fpsFactor / 1'000'000.0;
-	auto height = Physics::VerticalThrow(50, _TimeSinceJumpStart, 9.81);
+	auto height = Physics::VerticalThrow(200, _TimeSinceJumpStart, 9.81 * 20);
 
 	if (height > 0)
 	{
