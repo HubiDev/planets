@@ -15,12 +15,14 @@ using namespace std;
 /// </summary>
 Player::Player()
 {
-	_PtrSprite = make_shared<Sprite>();
+	_Sprite = make_shared<Sprite>();
 
-	_Texture.loadFromFile("Textures\\astronaut_02.png");
-	_Texture.setSmooth(true);
-	_PtrSprite->setTexture(_Texture);	
-	_PtrSprite->setOrigin(_Texture.getSize().x / 2.f, _Texture.getSize().y / 2.f); //Set origin to center of the sprite	
+	_Texture.loadFromFile("Textures\\astronaut_formatted.png");	
+	_Texture.setSmooth(true);	
+	_Sprite->setTexture(_Texture);
+	_Sprite->setTextureRect(IntRect(0, 0, 800, _Texture.getSize().y));
+	_Sprite->setOrigin(_Sprite->getTextureRect().width / 2.f, _Sprite->getTextureRect().height / 2.f); //Set origin to center of the sprite		
+	_Sprite->setScale(0.1f, 0.1f);
 }
 
 /// <summary>
@@ -37,48 +39,55 @@ Player::~Player()
 /// <param name="states"></param>
 void Player::draw(RenderTarget& target, RenderStates states) const
 {	
-	target.draw(*_PtrSprite);
+	target.draw(*_Sprite);
 }
 
 /// <summary>
 /// 
 /// </summary>
 /// <param name="fpsFactor"></param>
-void Player::Update(float fpsFactor)
+void Player::Update(long long fpsFactor)
 {
+	double ms = fpsFactor / 1000.0; //Convert microseconds into milliseconds
+
 	if (!_IsJumping)
 	{
+		double degreesMoved = ROT_SPEED * ms; //Calculate how many degrees the player should have moved in the mean time
+
 		if (Keyboard::isKeyPressed(Keyboard::Key::Left))
 		{
-			_CurrentRotation -= 1 / fpsFactor / 50;
+			_CurrentRotation -= degreesMoved;
 
 			if (_CurrentRotation <= 0)
-			{
-				_CurrentRotation = static_cast<float>(M_PI * 2.f);
+			{	
+				double rest = 0 - _CurrentRotation;
+				_CurrentRotation = M_PI * 2.f - rest;
 			}
 
-			_PtrSprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_PtrSprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_Sprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right))
 		{
 
-			_CurrentRotation += 1 / fpsFactor / 50;
+			_CurrentRotation += degreesMoved;
 
 			if (_CurrentRotation >= (M_PI * 2))
 			{
-				_CurrentRotation = 0;
+				double rest = M_PI * 2 - _CurrentRotation;
+				_CurrentRotation = rest;
 			}
 
-			_PtrSprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
-			_PtrSprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
+			_Sprite->setPosition(Geometry::GetCircleCoordinatesForPhi(Vector2f(640, 360), 170.f, _CurrentRotation));
+			_Sprite->setRotation(Geometry::GetDegreesFromRadian(_CurrentRotation) + 90.f);
 		}
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::Key::Space))
+	if (Keyboard::isKeyPressed(Keyboard::Key::Space) && !_IsJumping)
 	{
 		_IsJumping = true;
+		_PosBeforeJump = _Sprite->getPosition();
 	}
 
 	if (_IsJumping)
@@ -89,29 +98,23 @@ void Player::Update(float fpsFactor)
 }
 
 /// <summary>
-/// 
+/// Moves the player during a jump.
 /// </summary>
-/// <param name="fpsFactor"></param>
-void Player::HandleJump(float fpsFactor)
+/// <param name="fpsFactor">The time elapsed since the last iteration.</param>
+void Player::HandleJump(long long fpsFactor)
 {
-	auto t = Game::CalculateElapsedTimeFromFpsFactor(fpsFactor);
-	float x = t / 10000000000.f;
+	_TimeSinceJumpStart += fpsFactor / 1'000'000.0;
+	auto height = Physics::VerticalThrow(50, _TimeSinceJumpStart, 9.81);
 
-	_TimeSinceJumpStart += x;
-
-	auto height = Physics::VerticalThrow(1.1f, _TimeSinceJumpStart, 9.81f);
-
-	_TmpHeight += height;
-
-	if (_TmpHeight > 0)
+	if (height > 0)
 	{
-		auto pos = Geometry::CalculatePointFromAngle(_CurrentRotation, height);
-		_PtrSprite->move(pos);
+		auto pos = Geometry::CalculatePointFromAngle(static_cast<float>(_CurrentRotation), static_cast<float>(height));		
+		_Sprite->setPosition(Vector2f(_PosBeforeJump.x + pos.x, _PosBeforeJump.y + pos.y));
 	}
 	else
-	{
+	{		
 		_IsJumping = false;
-		_TimeSinceJumpStart = 0.f;
+		_TimeSinceJumpStart = 0;
 		_TmpHeight = 0.f;
 	}
 }

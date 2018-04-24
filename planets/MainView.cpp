@@ -10,7 +10,7 @@ MainView::~MainView()
 {
 }
 
-void MainView::Update(float fpsFactor)
+void MainView::Update(long long fpsFactor)
 {
 	_Player.Update(fpsFactor);
 	_Planet.Update(fpsFactor);

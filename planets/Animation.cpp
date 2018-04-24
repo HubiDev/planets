@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Animation.hpp"
 
 
@@ -17,7 +16,7 @@ Animation::~Animation()
 {
 }
 
-void Animation::Update(float fpsFactor)
+void Animation::Update(long long fpsFactor)
 {
 }
 

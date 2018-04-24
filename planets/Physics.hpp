@@ -5,6 +5,6 @@ public:
 	Physics();
 	~Physics();
 
-	static float VerticalThrow(float v0, float t, float g);
+	static double VerticalThrow(double v0, double t, double g);
 };
 

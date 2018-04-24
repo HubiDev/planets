@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Geometry.hpp"
 
 #define _USE_MATH_DEFINES
@@ -46,7 +45,7 @@ Vector2f Geometry::GetCircleCoordinatesForPhi(const Vector2f& centerPoint, float
 /// <returns></returns>
 float Geometry::GetAngleBetweenPoints(const Vector2f & point1, const Vector2f & point2)
 {
-	float res = (atan2(point1.y, point1.x) - atan2(point2.y, point2.x)) * 180.f / M_PI;
+	float res = (atan2(point1.y, point1.x) - atan2(point2.y, point2.x)) * 180.f / static_cast<float>(M_PI);
 
 	if (res <= 0)
 	{
@@ -66,7 +65,7 @@ float Geometry::GetAngleBetweenPoints(const Vector2f & point1, const Vector2f & 
 /// <returns></returns>
 float Geometry::GetDegreesFromRadian(float radian)
 {
-	return radian * 180.f / M_PI;
+	return radian * 180.f / static_cast<float>(M_PI);
 }
 
 /// <summary>

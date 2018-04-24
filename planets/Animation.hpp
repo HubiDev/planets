@@ -20,7 +20,7 @@ public:
 	~Animation();
 
 
-	void Update(float fpsFactor);
+	void Update(long long fpsFactor);
 	void SetAnimationStepCount(int stepCount);
 	void SetAnimationMovement(int movementX, int movementY);
 	void SetFrameDuration(float duration);

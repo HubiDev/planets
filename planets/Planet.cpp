@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Planet.hpp"
 
 
@@ -26,6 +25,6 @@ void Planet::draw(RenderTarget& target, RenderStates states) const
 	target.draw(_Shape);
 }
 
-void Planet::Update(float fpsFactor)
+void Planet::Update(long long fpsFactor)
 {
 }

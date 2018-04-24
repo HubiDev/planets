@@ -15,8 +15,6 @@ public:
 	~Game();
 
 	void Start();
-	static float CalculateFpsFactor(long long timeSinceLastLoop);
-	static long long CalculateElapsedTimeFromFpsFactor(float fpsFactor);
 
 private:
 

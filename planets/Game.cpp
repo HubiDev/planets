@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Game.hpp"
 #include "MainView.hpp"
 #include "Geometry.hpp"
@@ -7,6 +6,8 @@
 #include <math.h>
 #include <chrono>
 #include <thread>
+
+using namespace chrono;
 
 /// <summary>
 /// Constructor
@@ -36,9 +37,15 @@ void Game::Start()
 {
 	_Window.create(VideoMode(1280, 720), "Planets", Style::Close, _WindowSettings);	
 	_FpsCounter.restart();
+	_FpsTimer.restart();
+
+	time_point<steady_clock> lastTimePoint = steady_clock::now();
+	long long elapsed = 0;
 
 	while (_Window.isOpen())
 	{
+		//this_thread::sleep_for(2ms);//Frame limiter
+
 		//Handle events
 		Event event;
 		while (_Window.pollEvent(event))
@@ -47,19 +54,16 @@ void Game::Start()
 			{
 				_Window.close();
 			}
-		}
-
-		auto fpsFactor = CalculateFpsFactor(_FpsTimer.getElapsedTime().asMicroseconds());
-		_FpsTimer.restart();
+		}		
 
 		_Window.clear(Color::Black);
 
 		//Update and draw each view
 		for (const auto& currentView : _ViewsToDisplay)
 		{
-			currentView->Update(fpsFactor);
+			currentView->Update(elapsed);
 			_Window.draw(*currentView);
-		}	
+		}
 
 		_Window.display();		
 
@@ -73,27 +77,9 @@ void Game::Start()
 		{ 
 			++_Fps;
 		}
+
+		auto now = steady_clock::now();		
+		elapsed = duration_cast<chrono::microseconds>(now - lastTimePoint).count();
+		lastTimePoint = now;
 	}
-}
-
-/// <summary>
-/// 
-/// </summary>
-/// <param name="timeSinceLastLoop"></param>
-/// <returns></returns>
-float Game::CalculateFpsFactor(long long timeSinceLastLoop)
-{
-	float res = 10000.f / (float)timeSinceLastLoop;
-	return res;
-}
-
-/// <summary>
-/// 
-/// </summary>
-/// <param name="fpsFactor"></param>
-/// <returns></returns>
-long long Game::CalculateElapsedTimeFromFpsFactor(float fpsFactor)
-{
-	long long res = static_cast<long long>(10000 * fpsFactor);
-	return res;
 }

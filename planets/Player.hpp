@@ -12,19 +12,33 @@ public:
 
 	// Inherited via GameElementBase
 	virtual void draw(RenderTarget & target, RenderStates states) const override;
-	virtual void Update(float fpsFactor) override;
+	virtual void Update(long long fpsFactor) override;
 
 private:
 
-	void HandleJump(float fpsFactor);
+#pragma region Methods
 
-	//-----------------------------------------------------------------------------
-	//RectangleShape _Shape;
-	Texture _Texture;	
-	shared_ptr<Sprite> _PtrSprite = nullptr;
-	float _CurrentRotation = 0.f;
+	void HandleJump(long long fpsFactor);
+
+#pragma endregion	
+
+#pragma region Fields
+
+	Texture _Texture;
+	shared_ptr<Sprite> _Sprite = nullptr;
+	double _CurrentRotation = 0.f;
 	bool _IsJumping = false;
-	float _TimeSinceJumpStart = 0.f;
-	float _TmpHeight = 0.f;	;
+	double _TimeSinceJumpStart = 0;
+	double _TmpHeight = 0.f;
+	Vector2f _PosBeforeJump;
+
+#pragma endregion
+
+#pragma region Constants
+
+	const float ROT_SPEED = 0.0016f;
+
+#pragma endregion
+
 };
 

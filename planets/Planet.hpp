@@ -10,7 +10,7 @@ public:
 
 	// Inherited via GameElementBase
 	virtual void draw(RenderTarget& target, RenderStates states) const override;
-	virtual void Update(float fpsFactor) override;
+	virtual void Update(long long fpsFactor) override;
 
 private:
 	CircleShape _Shape;
